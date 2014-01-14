@@ -1,0 +1,30 @@
+#!/bin/bash
+
+upstream="$1"
+current="`git config --get remote.upstream.url`"
+
+# no args? provide current remote
+if [ -z $upstream ]; then
+  if [ -z $current ]; then
+    echo "no upstream remote set"
+  else
+    echo $current
+  fi
+  exit 0
+fi
+
+# attempt to add
+git remote add upstream $upstream &> /dev/null
+
+if [ $? -ne 0 ]; then
+  echo -n -e "... do you want to clobber your current remote (\033[1m$current\033[00m)? [yn] "
+  read clobber
+  if [ "$clobber" == "y" ]; then
+    git config remote.upstream.url $upstream
+  else
+    # don't clobber
+    exit 0
+  fi
+fi
+
+echo "... set upstream remote to $upstream"
