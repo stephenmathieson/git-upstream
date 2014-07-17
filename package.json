@@ -1,0 +1,9 @@
+{
+  "name": "git-upstream",
+  "version": "0.0.1",
+  "description": "Simple upstream remove management for git",
+  "global": "true",
+  "install": "make install",
+  "scripts": [ "git-upstream" ]
+}
+
